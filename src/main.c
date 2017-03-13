@@ -5,7 +5,7 @@
 ** Login   <matthias.prost@epitech.eu@epitech.eu>
 **
 ** Started on  Mon Mar 13 14:43:28 2017 Matthias Prost
-** Last update Mon Mar 13 16:54:14 2017 Matthias Prost
+** Last update Mon Mar 13 17:50:59 2017 Cyril
 */
 
 #include "extern.h"
@@ -28,16 +28,18 @@ int	main(int ac, char **av)
   t_philo	value;
 
   i = 0;
+  if (ac != 5)
+    return (fprintf(stderr, "USAGE: ./philo -p [nbr] -e [nbr]\n"));
   while (++i != ac)
     {
       if (strcmp(av[i], "-p") == 0)
 	{
-	  if ((value.nb_philo = my_str_is_num(av[i++])) == -1)
+	  if ((value.nb_philo = my_str_is_num(av[++i])) == -1)
 	    return (fprintf(stderr, "Error: argument -p is invalid\n"));
 	}
       else if (strcmp(av[i], "-e") == 0)
 	{
-	  if ((value.rice = my_str_is_num(av[i++])) == -1)
+	  if ((value.rice = my_str_is_num(av[++i])) == -1)
 	    return (fprintf(stderr, "Error: argument -e is invalid\n"));
 	}
       else

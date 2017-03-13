@@ -5,7 +5,7 @@
 ** Login   <matthias.prost@epitech.eu@epitech.eu>
 **
 ** Started on  Mon Mar 13 14:48:38 2017 Matthias Prost
-** Last update Mon Mar 13 16:32:48 2017 Matthias Prost
+** Last update Mon Mar 13 17:52:04 2017 Cyril
 */
 
 #ifndef _PHILOSOPHE_H_
@@ -18,8 +18,8 @@
 
 typedef struct	s_philo
 {
-  			int			nb_philo;
-  			int			rice;
-}								t_philo;
+  int		nb_philo;
+  int  		rice;
+}     		t_philo;
 
 #endif
