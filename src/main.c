@@ -5,11 +5,22 @@
 ** Login   <matthias.prost@epitech.eu@epitech.eu>
 **
 ** Started on  Mon Mar 13 14:43:28 2017 Matthias Prost
-** Last update Mon Mar 13 16:03:07 2017 Matthias Prost
+** Last update Mon Mar 13 16:54:14 2017 Matthias Prost
 */
 
 #include "extern.h"
 #include "philosophe.h"
+
+int	my_str_is_num(char *str)
+{
+  int	i;
+
+  i = -1;
+  while (str[++i])
+    if (str[i] > '9' || str[i] < '0')
+      return(-1);
+  return (atoi(str));
+}
 
 int	main(int ac, char **av)
 {
@@ -17,12 +28,20 @@ int	main(int ac, char **av)
   t_philo	value;
 
   i = 0;
-  while (av[++i])
+  while (++i != ac)
     {
       if (strcmp(av[i], "-p") == 0)
-	value.nb_philo = atoi(av[i++]);
+	{
+	  if ((value.nb_philo = my_str_is_num(av[i++])) == -1)
+	    return (fprintf(stderr, "Error: argument -p is invalid\n"));
+	}
       else if (strcmp(av[i], "-e") == 0)
-	value.rice = atoi(av[i++]);
+	{
+	  if ((value.rice = my_str_is_num(av[i++])) == -1)
+	    return (fprintf(stderr, "Error: argument -e is invalid\n"));
+	}
+      else
+	return (fprintf(stderr, "USAGE: ./philo -p [nbr] -e [nbr]\n"));
     }
   return(0);
 }
