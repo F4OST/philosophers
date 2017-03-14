@@ -5,7 +5,7 @@
 ** Login   <matthias.prost@epitech.eu@epitech.eu>
 **
 ** Started on  Mon Mar 13 14:43:28 2017 Matthias Prost
-** Last update	Tue Mar 14 16:11:45 2017 Cyril Puccio
+** Last update	Tue Mar 14 19:23:13 2017 Cyril Puccio
 */
 
 #include "extern.h"
@@ -48,24 +48,25 @@ int		fill_tab(t_values *values)
   t_philo	*philo;
   int		i;
 
-  srand(time(NULL));
   i = -1;
   if ((philo = malloc(sizeof(t_philo) * values->nb_philo)) == NULL)
     return (-1);
   philo->val = values;
   while (++i != values->nb_philo)
     {
+      philo[i].id = i;
       if (i % 2 == 0)
 	philo[i].stick = 2;
       else
 	philo[i].stick = 0;
+      philo[i].state = 0;
       philo[i].rice = values->rice;
       philo[i].hand = &philo[i + 1];
       pthread_mutex_init(&philo[i].mutex, NULL);
     }
   if (values->nb_philo % 2 != 0)
     philo[values->nb_philo - 1].stick = 1;
-  philo[values->nb_philo - 1] = philo[0];
+  philo[values->nb_philo - 1].hand = &philo[0];
   init_thread(philo);
   return (0);
 }

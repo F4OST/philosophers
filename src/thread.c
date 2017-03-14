@@ -5,7 +5,7 @@
 ** Login	cyril.puccio@epitech.eu
 **
 ** Started on	Tue Mar 14 15:43:59 2017 Cyril Puccio
-** Last update	Tue Mar 14 18:09:07 2017 Cyril Puccio
+** Last update	Tue Mar 14 19:33:11 2017 Cyril Puccio
 */
 
 #include "extern.h"
@@ -13,30 +13,62 @@
 
 void            eat(t_philo *philo)
 {
-  pthread_mutex_lock(&philo->mutex);
-  pthread_mutex_lock(&philo->hand->mutex);
-  printf("Le philosophe mange - ");
+  while (pthread_mutex_trylock(&philo->mutex) == 0);
+  while (pthread_mutex_trylock(&philo->hand->mutex) == 0);
+  printf("Le philosophe %d mange, stick : %d\n", philo->id, philo->stick);
   philo->rice--;
-  printf("stick %d\n", philo->stick);
+  philo->state = 1;
+  philo->stick -= 1;
+  philo->hand->stick += 1;
+  pthread_mutex_unlock(&philo->mutex);
+  pthread_mutex_unlock(&philo->hand->mutex);
+}
+
+void            think(t_philo *philo)
+{
+  while (pthread_mutex_trylock(&philo->mutex) == 0);
+  while (pthread_mutex_trylock(&philo->hand->mutex) == 0);
+  printf("Le philosophe %d pense, stick : %d\n", philo->id, philo->stick);
+  philo->state = 0;
+  if (philo->hand->stick >= 1 && philo->hand->state != 0)
+    {
+      philo->stick += 1;
+      philo->hand->stick -= 1;
+    }
+  pthread_mutex_unlock(&philo->mutex);
+  pthread_mutex_unlock(&philo->hand->mutex);
+}
+
+void            rest(t_philo *philo)
+{
+  while (pthread_mutex_trylock(&philo->mutex) == 0);
+  while (pthread_mutex_trylock(&philo->hand->mutex) == 0);
+  printf("Le philosophe %d dors, stick : %d\n", philo->id, philo->stick);
+  philo->state = 2;
+  if (philo->hand->stick >= 1 && philo->hand->state != 0)
+    {
+      philo->stick += 1;
+      philo->hand->stick -= 1;
+    }
   pthread_mutex_unlock(&philo->mutex);
   pthread_mutex_unlock(&philo->hand->mutex);
 }
 
 void      *state_loop(void *arg)
 {
-  t_philo	*philo;
+  t_philo	philo;
 
-  philo = (t_philo*)arg;
-  while (philo->rice > 0)
+  philo = *(t_philo*)arg;
+  while (philo.rice > 0)
   {
-    printf("%d\n", philo->rice);
-    if (philo->stick == 2)
-      eat(philo);
-/*    else if (philo->stick == 1)
-      think(philo);
-    if (philo->stick == 0)
-      rest(philo); */
+    if (philo.stick == 2)
+      eat(&philo);
+    else if (philo.stick == 1)
+      think(&philo);
+    else
+      rest(&philo);
     sleep(1);
+    printf("---\n");
   }
   return (NULL);
 }
