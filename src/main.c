@@ -5,7 +5,7 @@
 ** Login   <matthias.prost@epitech.eu@epitech.eu>
 **
 ** Started on  Mon Mar 13 14:43:28 2017 Matthias Prost
-** Last update	Tue Mar 14 19:23:13 2017 Cyril Puccio
+** Last update	Tue Mar 14 22:58:45 2017 Cyril Puccio
 */
 
 #include "extern.h"
@@ -55,17 +55,14 @@ int		fill_tab(t_values *values)
   while (++i != values->nb_philo)
     {
       philo[i].id = i;
-      if (i % 2 == 0)
-	philo[i].stick = 2;
-      else
-	philo[i].stick = 0;
-      philo[i].state = 0;
+/*      if (rand() % 2 == 0)
+        philo[i].state = 0;
+      else */
+        philo[i].state = 2;
       philo[i].rice = values->rice;
       philo[i].hand = &philo[i + 1];
-      pthread_mutex_init(&philo[i].mutex, NULL);
+      philo[i].mutex = (pthread_mutex_t)PTHREAD_MUTEX_INITIALIZER;
     }
-  if (values->nb_philo % 2 != 0)
-    philo[values->nb_philo - 1].stick = 1;
   philo[values->nb_philo - 1].hand = &philo[0];
   init_thread(philo);
   return (0);
@@ -96,6 +93,6 @@ int		main(int ac, char **av)
     }
   RCFStartup(ac, av);
   fill_tab(&value);
-  /* RCFCleanup(); */
+  RCFCleanup();
   return(0);
 }

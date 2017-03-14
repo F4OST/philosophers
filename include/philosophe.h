@@ -5,7 +5,7 @@
 ** Login   <matthias.prost@epitech.eu@epitech.eu>
 **
 ** Started on  Mon Mar 13 14:48:38 2017 Matthias Prost
-** Last update	Tue Mar 14 18:28:48 2017 Cyril Puccio
+** Last update	Tue Mar 14 22:56:47 2017 Cyril Puccio
 */
 
 #ifndef _PHILOSOPHE_H_
@@ -27,7 +27,6 @@ typedef struct			s_values
 
 typedef struct			s_philo
 {
-  int				stick;
   int				rice;
   int				state;
   int       id;
@@ -37,5 +36,6 @@ typedef struct			s_philo
 }				t_philo;
 
 void *state_loop(void *arg);
+void rest(t_philo *philo);
 
 #endif

@@ -5,16 +5,16 @@
 ## Login   <cyril.puccio@epitech.eu>
 ##
 ## Started on  Fri Mar  3 20:39:06 2017 Cyril
-## Last update Tue Mar 14 15:45:50 2017 Cyril
+## Last update Tue Mar 14 22:39:09 2017 Cyril
 ##
 
-CC	=	gcc
+CC	=	gcc -D _BSD_SOURCE
 
 RM	=	rm -rf
 
 NAME	=	philo
 
-CFLAGS	=	-Wall -Werror -Wextra -ansi -I./include
+CFLAGS	=	-Wall  -Wextra -ansi -I./include
 
 LDFLAG	=	-L. -lriceferee -lpthread
 
