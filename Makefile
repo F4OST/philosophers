@@ -5,7 +5,7 @@
 ## Login   <cyril.puccio@epitech.eu>
 ##
 ## Started on  Fri Mar  3 20:39:06 2017 Cyril
-## Last update Mon Mar 13 15:12:46 2017 Cyril
+## Last update Tue Mar 14 15:45:50 2017 Cyril
 ##
 
 CC	=	gcc
@@ -18,7 +18,8 @@ CFLAGS	=	-Wall -Werror -Wextra -ansi -I./include
 
 LDFLAG	=	-L. -lriceferee -lpthread
 
-SRC	=	src/main.c
+SRC	=	src/main.c	\
+		src/thread.c
 
 OBJ	=	$(SRC:.c=.o)
 
