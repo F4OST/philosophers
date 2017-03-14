@@ -5,7 +5,7 @@
 ** Login   <matthias.prost@epitech.eu@epitech.eu>
 **
 ** Started on  Mon Mar 13 14:43:28 2017 Matthias Prost
-** Last update Tue Mar 14 15:37:06 2017 Cyril
+** Last update	Tue Mar 14 16:11:45 2017 Cyril Puccio
 */
 
 #include "extern.h"
@@ -31,15 +31,15 @@ int		init_thread(t_philo *philo)
   i = -1;
   while (++i != philo->val->nb_philo)
     {
-      /* if (pthread_create(&threads[i], NULL, &state_loop, &philo[i])) */
-      /* 	{ */
-      /* 	  fprintf(stderr, "Thread creation failed\n"); */
-      /* 	  return (-1); */
-      /* 	} */
+      if (pthread_create(&threads[i], NULL, &state_loop, &philo[i]))
+      	{
+      	  fprintf(stderr, "Thread creation failed\n");
+      	  return (-1);
+      	}
     }
   i = -1;
-  /* while (++i != philo->val->nb_philo) */
-  /*   pthread_join(threads[i], NULL);   */
+  while (++i != philo->val->nb_philo)
+    pthread_join(threads[i], NULL);
   return (0);
 }
 
@@ -61,6 +61,7 @@ int		fill_tab(t_values *values)
 	philo[i].stick = 0;
       philo[i].rice = values->rice;
       philo[i].hand = &philo[i + 1];
+      pthread_mutex_init(&philo[i].mutex, NULL);
     }
   if (values->nb_philo % 2 != 0)
     philo[values->nb_philo - 1].stick = 1;
@@ -90,7 +91,7 @@ int		main(int ac, char **av)
 	    return (fprintf(stderr, "Error: argument -e is invalid\n"));
 	}
       else
-	return (fprintf(stderr, "USAGE: ./philo -p [nbr] -e [nbr]\n")); 
+	return (fprintf(stderr, "USAGE: ./philo -p [nbr] -e [nbr]\n"));
     }
   RCFStartup(ac, av);
   fill_tab(&value);
