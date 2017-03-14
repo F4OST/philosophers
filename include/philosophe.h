@@ -5,7 +5,7 @@
 ** Login   <matthias.prost@epitech.eu@epitech.eu>
 **
 ** Started on  Mon Mar 13 14:48:38 2017 Matthias Prost
-** Last update Mon Mar 13 17:52:04 2017 Cyril
+** Last update Tue Mar 14 14:41:59 2017 Cyril
 */
 
 #ifndef _PHILOSOPHE_H_
@@ -15,11 +15,22 @@
 #include <errno.h>
 #include <string.h>
 #include <stdlib.h>
+#include <pthread.h>
+#include <time.h>
 
-typedef struct	s_philo
+typedef struct	s_values
 {
   int		nb_philo;
   int  		rice;
-}     		t_philo;
+}     		t_values;
+
+typedef struct		s_philo
+{
+  int			stick;
+  int	  		rice;
+  int			state;
+  struct s_philo	*hand;
+  t_values		*val;
+}			t_philo;
 
 #endif

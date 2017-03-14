@@ -5,7 +5,7 @@
 ** Login   <matthias.prost@epitech.eu@epitech.eu>
 **
 ** Started on  Mon Mar 13 14:43:28 2017 Matthias Prost
-** Last update Mon Mar 13 17:50:59 2017 Cyril
+** Last update Tue Mar 14 15:37:06 2017 Cyril
 */
 
 #include "extern.h"
@@ -22,10 +22,57 @@ int	my_str_is_num(char *str)
   return (atoi(str));
 }
 
-int	main(int ac, char **av)
+int		init_thread(t_philo *philo)
 {
-  int			i;
-  t_philo	value;
+  pthread_t	threads[philo->val->nb_philo];
+  int		i;
+
+  (void)threads;
+  i = -1;
+  while (++i != philo->val->nb_philo)
+    {
+      /* if (pthread_create(&threads[i], NULL, &state_loop, &philo[i])) */
+      /* 	{ */
+      /* 	  fprintf(stderr, "Thread creation failed\n"); */
+      /* 	  return (-1); */
+      /* 	} */
+    }
+  i = -1;
+  /* while (++i != philo->val->nb_philo) */
+  /*   pthread_join(threads[i], NULL);   */
+  return (0);
+}
+
+int		fill_tab(t_values *values)
+{
+  t_philo	*philo;
+  int		i;
+
+  srand(time(NULL));
+  i = -1;
+  if ((philo = malloc(sizeof(t_philo) * values->nb_philo)) == NULL)
+    return (-1);
+  philo->val = values;
+  while (++i != values->nb_philo)
+    {
+      if (i % 2 == 0)
+	philo[i].stick = 2;
+      else
+	philo[i].stick = 0;
+      philo[i].rice = values->rice;
+      philo[i].hand = &philo[i + 1];
+    }
+  if (values->nb_philo % 2 != 0)
+    philo[values->nb_philo - 1].stick = 1;
+  philo[values->nb_philo - 1] = philo[0];
+  init_thread(philo);
+  return (0);
+}
+
+int		main(int ac, char **av)
+{
+  int	       	i;
+  t_values	value;
 
   i = 0;
   if (ac != 5)
@@ -43,7 +90,10 @@ int	main(int ac, char **av)
 	    return (fprintf(stderr, "Error: argument -e is invalid\n"));
 	}
       else
-	return (fprintf(stderr, "USAGE: ./philo -p [nbr] -e [nbr]\n"));
+	return (fprintf(stderr, "USAGE: ./philo -p [nbr] -e [nbr]\n")); 
     }
+  RCFStartup(ac, av);
+  fill_tab(&value);
+  /* RCFCleanup(); */
   return(0);
 }
