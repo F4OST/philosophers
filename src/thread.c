@@ -5,7 +5,7 @@
 ** Login	cyril.puccio@epitech.eu
 **
 ** Started on	Tue Mar 14 15:43:59 2017 Cyril Puccio
-** Last update	Tue Mar 14 19:33:11 2017 Cyril Puccio
+** Last update	Tue Mar 14 19:36:59 2017 Cyril Puccio
 */
 
 #include "extern.h"
@@ -13,6 +13,7 @@
 
 void            eat(t_philo *philo)
 {
+  philo->hand->stick += 1;
   while (pthread_mutex_trylock(&philo->mutex) == 0);
   while (pthread_mutex_trylock(&philo->hand->mutex) == 0);
   printf("Le philosophe %d mange, stick : %d\n", philo->id, philo->stick);
