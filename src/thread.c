@@ -5,7 +5,7 @@
 ** Login	cyril.puccio@epitech.eu
 **
 ** Started on	Tue Mar 14 15:43:59 2017 Cyril Puccio
-** Last update	Wed Mar 15 14:40:23 2017 Cyril Puccio
+** Last update	Wed Mar 15 16:45:40 2017 Cyril Puccio
 */
 
 #include "extern.h"
@@ -13,10 +13,10 @@
 
 void            eat(t_philo *philo)
 {
-  printf("Le philosophe %d mange\n", philo->id);
-  philo->rice--;
+  philo->rice = philo->rice - 1;
   philo->state = 1;
-  usleep(100);
+  printf("Le philosophe %d mange - Riz: %d - State: %d\n", philo->id, \
+  philo->rice, philo->state);
   lphilo_take_chopstick(&philo->mutex);
   lphilo_take_chopstick(&philo->hand->mutex);
   lphilo_eat();
@@ -24,7 +24,6 @@ void            eat(t_philo *philo)
   lphilo_release_chopstick(&philo->hand->mutex);
   pthread_mutex_unlock(&philo->mutex);
   pthread_mutex_unlock(&philo->hand->mutex);
-  rest(philo);
 }
 
 void            think(t_philo *philo, int a)
@@ -33,8 +32,9 @@ void            think(t_philo *philo, int a)
     lphilo_take_chopstick(&philo->mutex);
   else
     lphilo_take_chopstick(&philo->hand->mutex);
-  printf("Le philosophe %d pense\n", philo->id);
   philo->state = 0;
+  printf("Le philosophe %d pense - Riz: %d - State: %d\n", philo->id, \
+  philo->rice, philo->state);
   lphilo_think();
   if (a == 0)
   {
@@ -51,28 +51,42 @@ void            think(t_philo *philo, int a)
 void            rest(t_philo *philo)
 {
   lphilo_sleep();
-  printf("Le philosophe %d dors\n", philo->id);
   philo->state = 2;
+  printf("Le philosophe %d dors - Riz: %d - State: %d\n", philo->id, \
+  philo->rice, philo->state);
 }
 
 void      *state_loop(void *arg)
 {
   t_philo	*philo;
+  int     a;
+  int     b;
 
   philo = (t_philo*)arg;
-/*  printf("%p %p\n", philo, philo->hand); */
-  while (philo->rice > 0)
+  while (philo->rice != 0)
   {
-    int a = pthread_mutex_trylock(&philo->mutex);
-    int b = pthread_mutex_trylock(&philo->hand->mutex);
-    if (a == 0 && b == 0)
-      eat(philo);
-    else if (a == 0 || b == 0)
-      think(philo, a);
-    else
+    if (philo->state == 0)
+    {
+        a = pthread_mutex_trylock(&philo->mutex);
+        b = pthread_mutex_trylock(&philo->hand->mutex);
+        if (a == 0 && b != 0)
+          pthread_mutex_unlock(&philo->mutex);
+        else if (b == 0 && a != 0)
+          pthread_mutex_unlock(&philo->hand->mutex);
+        else if (b == 0 && a == 0)
+          eat(philo);
+    }
+    else if (philo->state == 2)
+    {
+      a = pthread_mutex_trylock(&philo->mutex);
+      if (a != 0)
+        b = pthread_mutex_trylock(&philo->hand->mutex);
+      if (a == 0 || b == 0)
+        think(philo, a);
+    }
+    else if (philo->state == 1)
       rest(philo);
-/*    sleep(1); */
-    printf("----\n");
   }
+  printf("----\n");
   return (NULL);
 }
