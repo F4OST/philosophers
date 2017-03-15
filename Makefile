@@ -5,10 +5,10 @@
 ## Login   <cyril.puccio@epitech.eu>
 ##
 ## Started on  Fri Mar  3 20:39:06 2017 Cyril
-## Last update Tue Mar 14 22:39:09 2017 Cyril
+## Last update Wed Mar 15 16:55:26 2017 Matthias Prost
 ##
 
-CC	=	gcc -D _BSD_SOURCE
+CC	=	gcc
 
 RM	=	rm -rf
 
