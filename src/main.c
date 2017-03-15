@@ -1,11 +1,11 @@
 /*
-** main.c for philosophes in /home/prost_m/Rendu/Semestre_4/PSU_2016_philo/src/
+** main.c for philosophe in /home/prost_m/Rendu/Semestre_4/PSU_2016_philo/src/
 **
 ** Made by Matthias Prost
 ** Login   <matthias.prost@epitech.eu@epitech.eu>
 **
-** Started on  Mon Mar 13 14:43:28 2017 Matthias Prost
-** Last update	Wed Mar 15 17:31:53 2017 Cyril Puccio
+** Started on  Wed Mar 15 19:01:22 2017 Matthias Prost
+** Last update Wed Mar 15 19:07:13 2017 Matthias Prost
 */
 
 #include "extern.h"
@@ -25,7 +25,7 @@ int	my_str_is_num(char *str)
 int   cleanup_thread(t_philo *philo)
 {
   if (pthread_mutex_destroy(&philo->mutex) != 0)
-    fprintf(stderr, "Failed to destroy a mutex\n");
+    fprintf(stderr, "ERROR: Failed to destroy a mutex\n");
   free(philo);
   return (0);
 }
@@ -41,7 +41,7 @@ int		init_thread(t_philo *philo)
     {
       if (pthread_create(&threads[i], NULL, &state_loop, &philo[i]))
       	{
-      	  fprintf(stderr, "Thread creation failed\n");
+      	  fprintf(stderr, "ERROR: Thread creation failed\n");
       	  return (-1);
       	}
     }
@@ -58,6 +58,11 @@ int		fill_tab(t_values *values)
   int		i;
 
   i = -1;
+  if (values->nb_philo < 2)
+	{
+	  fprintf(stderr, "ERROR: insufisant number of philosopher\n");
+	  return (-1);
+	}
   if ((philo = malloc(sizeof(t_philo) * values->nb_philo)) == NULL)
     return (-1);
   philo->val = values;
@@ -100,7 +105,8 @@ int		main(int ac, char **av)
 	return (fprintf(stderr, "USAGE: ./philo -p [nbr] -e [nbr]\n"));
     }
   RCFStartup(ac, av);
-  fill_tab(&value);
+  if (fill_tab(&value) == -1)
+	return (0);
   RCFCleanup();
   return(0);
 }

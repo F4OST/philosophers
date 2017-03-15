@@ -4,8 +4,8 @@
 ** Made by Matthias Prost
 ** Login   <matthias.prost@epitech.eu@epitech.eu>
 **
-** Started on  Mon Mar 13 14:48:38 2017 Matthias Prost
-** Last update	Wed Mar 15 17:01:25 2017 Cyril Puccio
+** Started on  Wed Mar 15 19:01:14 2017 Matthias Prost
+** Last update Wed Mar 15 19:01:20 2017 Matthias Prost
 */
 
 #ifndef _PHILOSOPHE_H_
