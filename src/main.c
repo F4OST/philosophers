@@ -5,22 +5,11 @@
 ** Login   <matthias.prost@epitech.eu@epitech.eu>
 **
 ** Started on  Wed Mar 15 19:01:22 2017 Matthias Prost
-** Last update Wed Mar 15 19:07:13 2017 Matthias Prost
+** Last update Wed Mar 15 20:18:49 2017 Matthias Prost
 */
 
 #include "extern.h"
 #include "philosophe.h"
-
-int	my_str_is_num(char *str)
-{
-  int	i;
-
-  i = -1;
-  while (str[++i])
-    if (str[i] > '9' || str[i] < '0')
-      return(-1);
-  return (atoi(str));
-}
 
 int   cleanup_thread(t_philo *philo)
 {
@@ -81,29 +70,37 @@ int		fill_tab(t_values *values)
   return (init_thread(philo));
 }
 
-int		main(int ac, char **av)
+int		verif(t_values *value, int ac, char **av)
 {
-  int	       	i;
-  t_values	value;
+  int		i;
 
   i = 0;
-  if (ac != 5)
-    return (fprintf(stderr, "USAGE: ./philo -p [nbr] -e [nbr]\n"));
   while (++i != ac)
     {
       if (strcmp(av[i], "-p") == 0)
-	{
-	  if ((value.nb_philo = my_str_is_num(av[++i])) == -1)
+  {
+	  if ((value->nb_philo = my_str_is_num(av[++i])) == -1)
 	    return (fprintf(stderr, "Error: argument -p is invalid\n"));
 	}
       else if (strcmp(av[i], "-e") == 0)
 	{
-	  if ((value.rice = my_str_is_num(av[++i])) == -1)
+	  if ((value->rice = my_str_is_num(av[++i])) == -1)
 	    return (fprintf(stderr, "Error: argument -e is invalid\n"));
 	}
       else
 	return (fprintf(stderr, "USAGE: ./philo -p [nbr] -e [nbr]\n"));
     }
+  return (2);
+}
+
+int		main(int ac, char **av)
+{
+  t_values	value;
+
+  if (ac != 5)
+    return (fprintf(stderr, "USAGE: ./philo -p [nbr] -e [nbr]\n"));
+  if (verif(&value, ac, av) != 2)
+    return (0);
   RCFStartup(ac, av);
   if (fill_tab(&value) == -1)
 	return (0);

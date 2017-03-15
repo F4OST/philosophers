@@ -52,37 +52,42 @@ void            rest(t_philo *philo)
   philo->state = 2;
 }
 
+void action(t_philo *philo) {
+  int		a;
+  int		b;
+  
+  if (philo->state == 0)
+  {
+      a = pthread_mutex_trylock(&philo->mutex);
+      b = pthread_mutex_trylock(&philo->hand->mutex);
+      if (a == 0 && b != 0)
+        pthread_mutex_unlock(&philo->mutex);
+      else if (b == 0 && a != 0)
+        pthread_mutex_unlock(&philo->hand->mutex);
+      else if (b == 0 && a == 0)
+        eat(philo);
+  }
+  else if (philo->state == 2)
+  {
+    a = pthread_mutex_trylock(&philo->mutex);
+    if (a != 0)
+      b = pthread_mutex_trylock(&philo->hand->mutex);
+    if (a == 0 || b == 0)
+      think(philo, a);
+  }
+  else if (philo->state == 1)
+    rest(philo);
+}
+
 void      *state_loop(void *arg)
 {
   t_philo	*philo;
-  int     a;
-  int     b;
 
   philo = (t_philo*)arg;
   while (philo->rice != 0 && stop == 0)
   {
-    usleep(rand() % 5000);
-    if (philo->state == 0)
-    {
-        a = pthread_mutex_trylock(&philo->mutex);
-        b = pthread_mutex_trylock(&philo->hand->mutex);
-        if (a == 0 && b != 0)
-          pthread_mutex_unlock(&philo->mutex);
-        else if (b == 0 && a != 0)
-          pthread_mutex_unlock(&philo->hand->mutex);
-        else if (b == 0 && a == 0)
-          eat(philo);
-    }
-    else if (philo->state == 2)
-    {
-      a = pthread_mutex_trylock(&philo->mutex);
-      if (a != 0)
-        b = pthread_mutex_trylock(&philo->hand->mutex);
-      if (a == 0 || b == 0)
-        think(philo, a);
-    }
-    else if (philo->state == 1)
-      rest(philo);
+      usleep(rand() % 5000);
+      action(philo);
   }
   stop = 1;
   return (NULL);
