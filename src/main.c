@@ -5,13 +5,13 @@
 ** Login   <matthias.prost@epitech.eu@epitech.eu>
 **
 ** Started on  Wed Mar 15 19:01:22 2017 Matthias Prost
-** Last update Wed Mar 15 20:18:49 2017 Matthias Prost
+** Last update Wed Mar 15 20:50:34 2017 Matthias Prost
 */
 
 #include "extern.h"
 #include "philosophe.h"
 
-int   cleanup_thread(t_philo *philo)
+int		 cleanup_thread(t_philo *philo)
 {
   if (pthread_mutex_destroy(&philo->mutex) != 0)
     fprintf(stderr, "ERROR: Failed to destroy a mutex\n");
@@ -45,13 +45,13 @@ int		fill_tab(t_values *values)
 {
   t_philo	*philo;
   int		i;
-
+  
   i = -1;
   if (values->nb_philo < 2)
-	{
-	  fprintf(stderr, "ERROR: insufisant number of philosopher\n");
-	  return (-1);
-	}
+    {
+      fprintf(stderr, "ERROR: insufisant number of philosopher\n");
+      return (-1);
+    }
   if ((philo = malloc(sizeof(t_philo) * values->nb_philo)) == NULL)
     return (-1);
   philo->val = values;
@@ -73,12 +73,12 @@ int		fill_tab(t_values *values)
 int		verif(t_values *value, int ac, char **av)
 {
   int		i;
-
+  
   i = 0;
   while (++i != ac)
     {
       if (strcmp(av[i], "-p") == 0)
-  {
+	{
 	  if ((value->nb_philo = my_str_is_num(av[++i])) == -1)
 	    return (fprintf(stderr, "Error: argument -p is invalid\n"));
 	}
@@ -96,14 +96,14 @@ int		verif(t_values *value, int ac, char **av)
 int		main(int ac, char **av)
 {
   t_values	value;
-
+  
   if (ac != 5)
     return (fprintf(stderr, "USAGE: ./philo -p [nbr] -e [nbr]\n"));
   if (verif(&value, ac, av) != 2)
     return (0);
   RCFStartup(ac, av);
   if (fill_tab(&value) == -1)
-	return (0);
+    return (0);
   RCFCleanup();
   return(0);
 }

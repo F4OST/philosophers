@@ -5,7 +5,7 @@
 ** Login   <matthias.prost@epitech.eu@epitech.eu>
 **
 ** Started on  Wed Mar 15 19:01:14 2017 Matthias Prost
-** Last update Wed Mar 15 20:10:38 2017 Matthias Prost
+** Last update Wed Mar 15 20:51:49 2017 Matthias Prost
 */
 
 #ifndef _PHILOSOPHE_H_
@@ -35,8 +35,8 @@ typedef struct			s_philo
   t_values			*val;
 }				t_philo;
 
-void	*state_loop(void *arg);
-void	rest(t_philo *philo);
-int		my_str_is_num(char *str);
+void				*state_loop(void *arg);
+void				rest(t_philo *philo);
+int				my_str_is_num(char *str);
 
 #endif
