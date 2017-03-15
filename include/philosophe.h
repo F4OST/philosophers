@@ -5,7 +5,7 @@
 ** Login   <matthias.prost@epitech.eu@epitech.eu>
 **
 ** Started on  Mon Mar 13 14:48:38 2017 Matthias Prost
-** Last update	Tue Mar 14 22:56:47 2017 Cyril Puccio
+** Last update	Wed Mar 15 17:01:25 2017 Cyril Puccio
 */
 
 #ifndef _PHILOSOPHE_H_
@@ -29,6 +29,7 @@ typedef struct			s_philo
 {
   int				rice;
   int				state;
+  int       stop;
   int       id;
   struct s_philo		*hand;
   pthread_mutex_t		mutex;

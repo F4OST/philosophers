@@ -5,7 +5,7 @@
 ** Login   <matthias.prost@epitech.eu@epitech.eu>
 **
 ** Started on  Mon Mar 13 14:43:28 2017 Matthias Prost
-** Last update	Wed Mar 15 16:26:51 2017 Cyril Puccio
+** Last update	Wed Mar 15 17:31:53 2017 Cyril Puccio
 */
 
 #include "extern.h"
@@ -20,6 +20,14 @@ int	my_str_is_num(char *str)
     if (str[i] > '9' || str[i] < '0')
       return(-1);
   return (atoi(str));
+}
+
+int   cleanup_thread(t_philo *philo)
+{
+  if (pthread_mutex_destroy(&philo->mutex) != 0)
+    fprintf(stderr, "Failed to destroy a mutex\n");
+  free(philo);
+  return (0);
 }
 
 int		init_thread(t_philo *philo)
@@ -40,6 +48,7 @@ int		init_thread(t_philo *philo)
   i = -1;
   while (++i != philo->val->nb_philo)
     pthread_join(threads[i], NULL);
+  cleanup_thread(philo);
   return (0);
 }
 
@@ -57,8 +66,9 @@ int		fill_tab(t_values *values)
       philo[i].id = i;
       if (rand() % 2 == 0)
         philo[i].state = 0;
-      else 
+      else
         philo[i].state = 2;
+      philo->stop = 0;
       philo[i].rice = values->rice;
       philo[i].hand = &philo[i + 1];
       philo[i].mutex = (pthread_mutex_t)PTHREAD_MUTEX_INITIALIZER;
@@ -91,11 +101,7 @@ int		main(int ac, char **av)
 	return (fprintf(stderr, "USAGE: ./philo -p [nbr] -e [nbr]\n"));
     }
   RCFStartup(ac, av);
-  if (fill_tab(&value) == -1)
-  {
-    RCFCleanup();
-    return (0);
-  }
+  fill_tab(&value);
   RCFCleanup();
   return(0);
 }
