@@ -5,10 +5,10 @@
 ## Login   <cyril.puccio@epitech.eu>
 ##
 ## Started on  Fri Mar  3 20:39:06 2017 Cyril
-## Last update Wed Mar 15 17:42:28 2017 Matthias Prost
+## Last update Wed Mar 15 18:45:02 2017 Matthias Prost
 ##
 
-CC	=	gcc
+CC	=	gcc -D _DEFAULT_SOURCE
 
 RM	=	rm -rf
 

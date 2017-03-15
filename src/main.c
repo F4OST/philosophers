@@ -68,7 +68,6 @@ int		fill_tab(t_values *values)
         philo[i].state = 0;
       else
         philo[i].state = 2;
-      philo->stop = 0;
       philo[i].rice = values->rice;
       philo[i].hand = &philo[i + 1];
       philo[i].mutex = (pthread_mutex_t)PTHREAD_MUTEX_INITIALIZER;

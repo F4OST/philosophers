@@ -11,6 +11,8 @@
 #include "extern.h"
 #include "philosophe.h"
 
+int							stop = 0;
+
 void            eat(t_philo *philo)
 {
   philo->rice = philo->rice - 1;
@@ -57,8 +59,9 @@ void      *state_loop(void *arg)
   int     b;
 
   philo = (t_philo*)arg;
-  while (philo->rice != 0)
+  while (philo->rice != 0 && stop == 0)
   {
+    usleep(rand() % 5000);
     if (philo->state == 0)
     {
         a = pthread_mutex_trylock(&philo->mutex);
@@ -81,5 +84,6 @@ void      *state_loop(void *arg)
     else if (philo->state == 1)
       rest(philo);
   }
+  stop = 1;
   return (NULL);
 }

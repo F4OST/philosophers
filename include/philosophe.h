@@ -29,7 +29,6 @@ typedef struct			s_philo
 {
   int				rice;
   int				state;
-  int       stop;
   int       id;
   struct s_philo		*hand;
   pthread_mutex_t		mutex;
