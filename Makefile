@@ -5,7 +5,7 @@
 ## Login   <cyril.puccio@epitech.eu>
 ##
 ## Started on  Fri Mar  3 20:39:06 2017 Cyril
-## Last update Wed Mar 15 16:55:26 2017 Matthias Prost
+## Last update Wed Mar 15 17:42:28 2017 Matthias Prost
 ##
 
 CC	=	gcc
@@ -14,7 +14,7 @@ RM	=	rm -rf
 
 NAME	=	philo
 
-CFLAGS	=	-Wall  -Wextra -ansi -I./include
+CFLAGS	=	-Wall -W -Wextra -I./include
 
 LDFLAG	=	-L. -lriceferee -lpthread
 

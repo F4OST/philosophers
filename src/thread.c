@@ -15,8 +15,6 @@ void            eat(t_philo *philo)
 {
   philo->rice = philo->rice - 1;
   philo->state = 1;
-  printf("Le philosophe %d mange - Riz: %d - State: %d\n", philo->id, \
-  philo->rice, philo->state);
   lphilo_take_chopstick(&philo->mutex);
   lphilo_take_chopstick(&philo->hand->mutex);
   lphilo_eat();
@@ -33,8 +31,6 @@ void            think(t_philo *philo, int a)
   else
     lphilo_take_chopstick(&philo->hand->mutex);
   philo->state = 0;
-  printf("Le philosophe %d pense - Riz: %d - State: %d\n", philo->id, \
-  philo->rice, philo->state);
   lphilo_think();
   if (a == 0)
   {
@@ -52,8 +48,6 @@ void            rest(t_philo *philo)
 {
   lphilo_sleep();
   philo->state = 2;
-  printf("Le philosophe %d dors - Riz: %d - State: %d\n", philo->id, \
-  philo->rice, philo->state);
 }
 
 void      *state_loop(void *arg)
@@ -87,6 +81,5 @@ void      *state_loop(void *arg)
     else if (philo->state == 1)
       rest(philo);
   }
-  printf("----\n");
   return (NULL);
 }
