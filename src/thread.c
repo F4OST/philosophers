@@ -5,7 +5,7 @@
 ** Login	cyril.puccio@epitech.eu
 **
 ** Started on	Tue Mar 14 15:43:59 2017 Cyril Puccio
-** Last update	Tue Mar 14 23:00:17 2017 Cyril Puccio
+** Last update	Wed Mar 15 14:40:23 2017 Cyril Puccio
 */
 
 #include "extern.h"
@@ -17,7 +17,11 @@ void            eat(t_philo *philo)
   philo->rice--;
   philo->state = 1;
   usleep(100);
+  lphilo_take_chopstick(&philo->mutex);
+  lphilo_take_chopstick(&philo->hand->mutex);
   lphilo_eat();
+  lphilo_release_chopstick(&philo->mutex);
+  lphilo_release_chopstick(&philo->hand->mutex);
   pthread_mutex_unlock(&philo->mutex);
   pthread_mutex_unlock(&philo->hand->mutex);
   rest(philo);
@@ -25,13 +29,23 @@ void            eat(t_philo *philo)
 
 void            think(t_philo *philo, int a)
 {
+  if (a == 0)
+    lphilo_take_chopstick(&philo->mutex);
+  else
+    lphilo_take_chopstick(&philo->hand->mutex);
   printf("Le philosophe %d pense\n", philo->id);
   philo->state = 0;
   lphilo_think();
   if (a == 0)
+  {
+    lphilo_release_chopstick(&philo->mutex);
     pthread_mutex_unlock(&philo->mutex);
+  }
   else
+  {
+    lphilo_release_chopstick(&philo->hand->mutex);
     pthread_mutex_unlock(&philo->hand->mutex);
+  }
 }
 
 void            rest(t_philo *philo)
