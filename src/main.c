@@ -5,7 +5,7 @@
 ** Login   <matthias.prost@epitech.eu@epitech.eu>
 **
 ** Started on  Wed Mar 15 19:01:22 2017 Matthias Prost
-** Last update Wed Mar 15 20:50:34 2017 Matthias Prost
+** Last update Fri Mar 17 13:26:52 2017 Cyril
 */
 
 #include "extern.h"
@@ -45,7 +45,7 @@ int		fill_tab(t_values *values)
 {
   t_philo	*philo;
   int		i;
-  
+
   i = -1;
   if (values->nb_philo < 2)
     {
@@ -73,7 +73,7 @@ int		fill_tab(t_values *values)
 int		verif(t_values *value, int ac, char **av)
 {
   int		i;
-  
+
   i = 0;
   while (++i != ac)
     {
@@ -96,7 +96,7 @@ int		verif(t_values *value, int ac, char **av)
 int		main(int ac, char **av)
 {
   t_values	value;
-  
+
   if (ac != 5)
     return (fprintf(stderr, "USAGE: ./philo -p [nbr] -e [nbr]\n"));
   if (verif(&value, ac, av) != 2)
@@ -105,5 +105,5 @@ int		main(int ac, char **av)
   if (fill_tab(&value) == -1)
     return (0);
   RCFCleanup();
-  return(0);
+  return (0);
 }

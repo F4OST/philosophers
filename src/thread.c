@@ -52,10 +52,11 @@ void            rest(t_philo *philo)
   philo->state = 2;
 }
 
-void		action(t_philo *philo) {
+void		action(t_philo *philo)
+{
   int		a;
   int		b;
-  
+
   if (philo->state == 0)
     {
       a = pthread_mutex_trylock(&philo->mutex);
@@ -82,7 +83,7 @@ void		action(t_philo *philo) {
 void		*state_loop(void *arg)
 {
   t_philo	*philo;
-  
+
   philo = (t_philo*)arg;
   while (philo->rice != 0 && stop == 0)
     {
