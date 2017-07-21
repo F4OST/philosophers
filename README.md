@@ -13,7 +13,7 @@ Un philosophe peut:
 - Manger								
 - Réfléchir
 										
-En sachant qu'un philosophe peut manger uniquement manger s'il possède deux baguettes, réfléchir avec une seule baguette et dormir avec ou sans baguette.
+En sachant qu'un philosophe peut uniquement manger s'il possède deux baguettes, réfléchir avec une seule baguette et dormir avec ou sans baguette.
 
 Chaque philosophe possède un certain nombre de grain de riz qui est défini en argument au démarrage. Lorsqu'un philosophe mange, le nombre de grain de riz -= 1. Lorsqu'un philosophe arrive à 0 grains de riz alors tous les autres doivent arrêter de manger et le programme doit également s'arrêter.
 
